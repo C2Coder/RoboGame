@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>RoboCamp 2025 Scanner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2c3e50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .scanner-container {
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: #000;
+        }
+
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .scanner-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            background: transparent;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+        }
+
+        .scanner-corners {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 4px solid #fff;
+        }
+
+        .corner.top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .corner.top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .corner.bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .corner.bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+        .status-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        .modal h1 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .answers {
+            display: grid;
+            gap: 15px;
+        }
+
+        .ans {
+            background: #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+        }
+
+        .ans:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .ans:active {
+            transform: translateY(0);
+        }
+
+        .ans h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .ans p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        #check .modal-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: #27ae60;
+        }
+
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-mark {
+            width: 40px;
+            height: 40px;
+            stroke: #27ae60;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+                margin: 15px 0;
+            }
+            
+            .scanner-container {
+                max-width: 350px;
+            }
+            
+            .scanner-frame {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>RoboCamp 2025</h1>
+    
+    <div class="scanner-container">
+        <div class="video-wrapper">
+            <video id="video" autoplay playsinline></video>
+            <div class="scanner-overlay">
+                <div class="scanner-frame">
+                    <div class="scanner-corners">
+                        <div class="corner top-left"></div>
+                        <div class="corner top-right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="corner bottom-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="status-text">
+            📱 Point your camera at a QR code
+        </div>
+    </div>
+
+    <canvas id="canvas" hidden></canvas>
+
+    <!-- Quiz Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <h1 id="q">Question</h1>
+            <div id="answers" class="answers">
+                <div id="ans1" class="ans">
+                    <h2 id="ans-a1">Answer 1</h2>
+                    <p id="ans-t1">Target 1</p>
+                </div>
+                <div id="ans2" class="ans">
+                    <h2 id="ans-a2">Answer 2</h2>
+                    <p id="ans-t2">Target 2</p>
+                </div>
+                <div id="ans3" class="ans">
+                    <h2 id="ans-a3">Answer 3</h2>
+                    <p id="ans-t3">Target 3</p>
+                </div>
+                <div id="ans4" class="ans">
+                    <h2 id="ans-a4">Answer 4</h2>
+                    <p id="ans-t4">Target 4</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Check Modal -->
+    <div id="check" class="modal hidden">
+        <div class="modal-content">
+            <div class="check-icon">
+                <svg class="check-mark" viewBox="0 0 24 24">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jsQR.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

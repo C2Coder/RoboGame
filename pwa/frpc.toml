@@ -1,0 +1,11 @@
+serverAddr = "c2coder.ddns.net"
+serverPort = 7000
+
+auth.method = "token"
+auth.token = "eh03DxYVAf1To9uDhPhVCAPvpLHVcgjfAV7OpkifySlTlBKKtOtUWiT7jHK59UAb"
+
+[[proxies]]
+name = "test-http"
+type = "http"
+localPort = 8000
+customDomains = ["c2coder.ddns.net"]
