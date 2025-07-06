@@ -37,15 +37,15 @@ def main():
     _total_pdfs = []
 
     source_pdfs = {
-        "wood": 5,
-        "copper": 2,
-        "silicon": 1,
-        "lead": 1,
-        "tin": 1,
-        "plastic": 1,
-        "lithium": 1,
-        "steel": 1,
-        "ceramic": 1,
+        "wood": 2,
+        "copper": 6,
+        "silicon": 3,
+        "lead": 2,
+        "tin": 2,
+        "plastic": 6,
+        "lithium": 3,
+        "steel": 3,
+        "ceramic": 4,
     }
     craft_pdfs = [
         "screw",
