@@ -64,6 +64,7 @@ def main():
         "smdCube",
         "simon",
         "slusmetr",
+        "robutek",
     ]
     transitions = {
         "wood": "Dřevo",
@@ -92,6 +93,7 @@ def main():
         "smdCube": "Smd Kostka",
         "simon": "Simon",
         "slusmetr": "Šlusmetr",
+        "robutek": "Robůtek",
     }
 
     for k in source_pdfs.keys():
@@ -102,6 +104,8 @@ def main():
     for p in craft_pdfs:
         _total_pdfs.append(f"craft_{p}")
         gen_pdf(f"craft_{p}", transitions[p])
+
+    gen_pdf("check", "check")
 
     merge_pdfs([f"out/pdf/{p}.pdf" for p in _total_pdfs], "out/pdf/all.pdf")
 
