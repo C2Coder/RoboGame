@@ -45,24 +45,25 @@ def create_pdf(
     ####################
 
     # Draw question ID
-    text(str(data.replace("q", "")), 0, height - 250, "Black", 200)
+    text(data.split("_")[0], 0, height - 200, "Black", 100)
 
     text("RoboCamp 2025", 0, 45, "Black", 30)
-
-    # Draw QR code centered
-    qr_s = 400  # Size of QR code
-    c.drawImage(ImageReader(qr_file), (width - qr_s) / 2, 100, qr_s, qr_s)
 
     # Logo
     l_s = 100
     c.drawImage(ImageReader(l_path), width-l_s-10 ,10, l_s, l_s)
 
+    # Draw QR code centered
+    qr_s = 400  # Size of QR code
+    c.drawImage(ImageReader(qr_file), (width - qr_s) / 2, 100, qr_s, qr_s)
+
+
     c.showPage()
     c.save()
 
 
-def gen_pdf(id: str):
-    create_pdf(id, f"out/pdf/{id}.pdf", f"{id}", "logo.png")
+def gen_pdf(id: str, text: str):
+    create_pdf(text, f"out/pdf/{id}.pdf", f"{id}", "logo.png")
 
 
 if __name__ == "__main__":

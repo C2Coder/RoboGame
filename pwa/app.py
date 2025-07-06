@@ -12,5 +12,5 @@ def start_server(port=8000):
 
 
 if __name__ == "__main__":
-    start_server(8007)
+    start_server(3000)
 

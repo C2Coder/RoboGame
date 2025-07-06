@@ -64,39 +64,6 @@
             z-index: 10;
         }
 
-        .scanner-frame {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            border: 3px solid #3498db;
-            border-radius: 15px;
-            background: transparent;
-            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
-        }
-
-        .scanner-corners {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-        .corner {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border: 4px solid #fff;
-        }
-
-        .corner.top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
-        .corner.top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
-        .corner.bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
-        .corner.bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
-
         .status-text {
             text-align: center;
             margin-top: 20px;
@@ -181,13 +148,23 @@
             font-weight: 400;
         }
 
-        #check .modal-content {
+        .modal-content {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 40px;
+        }
+
+        #check .modal-content {
             background: #27ae60;
         }
+
+        #cross .modal-content {
+            background: #ae3027;
+        }
+
+
 
         .check-icon {
             width: 80px;
@@ -209,6 +186,26 @@
             stroke-linejoin: round;
         }
 
+        .cross-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cross-mark {
+            width: 40px;
+            height: 40px;
+            stroke: #ae3027;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -218,16 +215,16 @@
                 font-size: 2rem;
                 margin: 15px 0;
             }
-            
+
             .scanner-container {
                 max-width: 350px;
             }
-            
+
             .scanner-frame {
                 width: 150px;
                 height: 150px;
             }
-            
+
             .modal-content {
                 padding: 20px;
             }
@@ -237,7 +234,7 @@
 
 <body>
     <h1>RoboCamp 2025</h1>
-    
+
     <div class="scanner-container">
         <div class="video-wrapper">
             <video id="video" autoplay playsinline></video>
@@ -259,27 +256,15 @@
 
     <canvas id="canvas" hidden></canvas>
 
-    <!-- Quiz Modal -->
-    <div id="modal" class="modal hidden">
+
+    <!-- Cross Modal -->
+    <div id="cross" class="modal hidden">
         <div class="modal-content">
-            <h1 id="q">Question</h1>
-            <div id="answers" class="answers">
-                <div id="ans1" class="ans">
-                    <h2 id="ans-a1">Answer 1</h2>
-                    <p id="ans-t1">Target 1</p>
-                </div>
-                <div id="ans2" class="ans">
-                    <h2 id="ans-a2">Answer 2</h2>
-                    <p id="ans-t2">Target 2</p>
-                </div>
-                <div id="ans3" class="ans">
-                    <h2 id="ans-a3">Answer 3</h2>
-                    <p id="ans-t3">Target 3</p>
-                </div>
-                <div id="ans4" class="ans">
-                    <h2 id="ans-a4">Answer 4</h2>
-                    <p id="ans-t4">Target 4</p>
-                </div>
+            <h1 id="cross-text" style="color:white">Musíš počkat před naskenováním tohoto kódu</h1>
+            <div class="cross-icon">
+                <svg class="cross-mark" viewBox="0 0 24 24">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
             </div>
         </div>
     </div>
@@ -287,15 +272,17 @@
     <!-- Check Modal -->
     <div id="check" class="modal hidden">
         <div class="modal-content">
+            <h1 id="check-text" style="color:white">Musíš počkat před naskenováním tohoto kódu</h1>
             <div class="check-icon">
                 <svg class="check-mark" viewBox="0 0 24 24">
-                    <path d="M20 6L9 17l-5-5"/>
+                    <path d="M20 6L9 17l-5-5" />
                 </svg>
             </div>
         </div>
     </div>
 
     <script src="js/jsQR.js"></script>
+    <script src="js/game-data.js"></script>
     <script src="js/main.js"></script>
 </body>
 
