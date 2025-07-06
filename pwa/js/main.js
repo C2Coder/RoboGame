@@ -7,13 +7,16 @@ const check = document.getElementById("check");
 const checkText = document.getElementById("check-text");
 const cross = document.getElementById("cross");
 const crossText = document.getElementById("cross-text");
-
+const inv = document.getElementById("inventory");
 
 check.addEventListener("click", () => {
   check.classList.add("hidden");});
 
 cross.addEventListener("click", () => {
   cross.classList.add("hidden"); });
+
+  inv.addEventListener("click", () => {
+  inv.classList.add("hidden"); });
 
 let lastScanned = "";
 
@@ -158,6 +161,23 @@ function saveScan(qrCode) {
   localStorage.setItem("qr_scan_history", JSON.stringify(scans));
 
   return scan;
+}
+
+function listInventory() {
+    inv.classList.remove("hidden");
+    const inventoryDiv = document.getElementById("inventory-items");
+    inventoryDiv.innerHTML = ""; // Clear previous content
+    const items = listItems();
+    if (items.length === 0) {
+        inventoryDiv.textContent = "Inventář je prázdný.";
+    } else {
+        items.forEach(({ itemId, quantity }) => {
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "inventory-item";
+            itemDiv.textContent = `${transitions[itemId]}: ${quantity}`;
+            inventoryDiv.appendChild(itemDiv);
+        });
+    }
 }
 
 // Get all scan history from localStorage

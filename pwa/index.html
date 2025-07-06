@@ -256,6 +256,19 @@
 
     <canvas id="canvas" hidden></canvas>
 
+    <button onclick="listInventory()" style="margin: 20px; padding: 12px 28px; font-size: 1rem; border-radius: 8px; border: none; background: #3498db; color: white; cursor: pointer;">
+        Ukázat inventář
+    </button>
+
+    <!-- Cross Modal -->
+    <div id="inventory" class="modal hidden">
+        <div class="modal-content">
+            <h1 id="inventory-title">Inventář</h1>
+            <div id="inventory-items">
+                <!-- Items will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
 
     <!-- Cross Modal -->
     <div id="cross" class="modal hidden">

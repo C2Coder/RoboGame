@@ -8,19 +8,19 @@ const craftingRecipes = {
     "solder": {"tin": 1, "lead": 1},
 
     "resistor": {"copper": 1, "ceramic": 1},
-    "ic": {"silicon": 1, "copper": 1, "plastic": 1},
+    "ic": {"silicon": 2, "copper": 1, "plastic": 1},
     "led": {"copper": 1, "plastic": 1},
     "button" : {"plastic": 1, "steel": 1, "copper": 1},
-    "battery": {"lithium": 1, "plastic": 1, "steel": 1},
+    "battery": {"lithium": 3, "plastic": 1, "steel": 1},
     "motor": {"steel": 2, "copper": 2},
 
     "robosvit": {"wood":2, "copper":4, "battery":1, "led":7, "resistor":1, "solder":1},
     "cube": {"pcb":1, "button":1, "ic":2, "led":7, "resistor":11, "solder":3},
-    "smdChallenge": {"pcb":1,  "ic":1, "led":1, "resistor":2, "solder":1,},
+    "smdChallenge": {"pcb":1,  "ic":1, "led":1, "resistor":2, "solder":1},
     "smdCube": {"pcb":1, "ic":1, "led":7, "resistor":4, "solder":2},
     "simon": {"pcb":1, "ic":1, "led":4, "resistor":4, "solder":2, "battery":1, "button":5},
     "slusmetr": {"pcb":1, "led":2, "resistor":2, "solder":1, "battery":1, "copper":2},
-    "robutek": {"pcb":2, "ic":3, "led":7, "resistor":10, "solder":1, "battery":1, "button":5, "motor":2, "nut":4, "screw":4},
+    "robutek": {"pcb":2, "ic":5, "led":7, "resistor":10, "solder":1, "battery":2, "button":5, "motor":2, "nut":4, "screw":4, "wood":8},
 
 }
 
